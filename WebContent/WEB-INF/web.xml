@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	id="WebApp_ID" version="3.1">
 
+	<!-- Mappings for the servlet -->
 	<servlet>
 		<servlet-name>FileUploadHandler</servlet-name>
 		<servlet-class>FileUploadHandler</servlet-class>
@@ -12,7 +13,7 @@
 		<servlet-name>FileUploadHandler</servlet-name>
 		<url-pattern>/upload</url-pattern>
 	</servlet-mapping>
-	
+
 	<servlet>
 		<servlet-name>CompareFileHandler</servlet-name>
 		<servlet-class>CompareFileHandler</servlet-class>
@@ -21,15 +22,41 @@
 		<servlet-name>CompareFileHandler</servlet-name>
 		<url-pattern>/compare</url-pattern>
 	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DownloadHandler</servlet-name>
+		<servlet-class>DownloadHandler</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DownloadHandler</servlet-name>
+		<url-pattern>/download</url-pattern>
+	</servlet-mapping>
+	
+	<!-- Mapping for WebService -->
+
+	<servlet>
+		<servlet-name>jersey-serlvet</servlet-name>
+		<servlet-class>org.glassfish.jersey.servlet.ServletContainer</servlet-class>
+
+		<init-param>
+			<param-name>jersey.config.server.provider.packages</param-name>
+			<param-value>com.csvservice</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>jersey-serlvet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
 	
 	
 	<display-name>CSVProcessingWeb</display-name>
 	<welcome-file-list>
-		<welcome-file>index.html</welcome-file>
-		<welcome-file>index.htm</welcome-file>
 		<welcome-file>index.jsp</welcome-file>
-		<welcome-file>default.html</welcome-file>
-		<welcome-file>default.htm</welcome-file>
-		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
+
 </web-app>

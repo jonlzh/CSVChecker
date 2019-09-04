@@ -107,7 +107,7 @@ ul {
 }
 
 .button {
-  background-color: mediumaquamarine; /* Green */
+  background-color: #4CAF50; /* Green */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -115,30 +115,6 @@ ul {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-}
-
-.upload-btn-wrapper {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.btn {
-  border: 2px solid gray;
-  color: gray;
-  background-color: white;
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.upload-btn-wrapper input[type=file] {
-  font-size: 100px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0;
 }
 </style>
 </head>
@@ -160,27 +136,34 @@ ul {
 			</div>
 
 			<div class="RightBody">
+				<div id="root"></div>
+    				<script type="text/babel">
+     					 ReactDOM.render(
+        <h1>Hello, world!{this.state.message}</h1>,
+        document.getElementById('root')
+      );
+
+    </script>
 				<div class="info">
 					<div class="info1">
 						<div id="result">
-							<h3>${requestScope["message1"]}</h3>
+							<h3>${requestScope["message"]}</h3>
 						</div>
 						<div class="innerinfo">
-							<h3>Choose Files to Upload</h3>
-							<form action="upload" method="post" enctype='multipart/form-data'>
-							
-								<input type="file" name="file" multiple /> <input type="submit"
-									value="upload" />
-							</form>
-							<%
-								if(request.getAttribute("download") != null){
-									String secondFile = request.getAttribute("download").toString();
-									out.println("<form action='download' method='post'>");
-									out.println("<input type='hidden' name='sFile' value='"+secondFile+"'>");
-									out.println("<input class='button' type='submit' name='submit' value='download' />");
-									out.println("</form>");
-								}
+							<form action="compare" method="post">
+								<%
+									if (request.getAttribute("files") != null) {
+										ArrayList<String> fileList = (ArrayList<String>) request.getAttribute("files");
+										out.println("<h3>Select The Main File</h3>");
+										session.setAttribute("fileList", fileList);
+										for (String file : fileList) {
+											out.println("<input type='radio' name='mainfile' value='" + file + "'/>" + file + "<br>");
+										}
+									}
 								%>
+								<input class="button" type="submit" name="submit" value="compare" />
+							</form>
+							
 						</div>
 						
 					</div>
